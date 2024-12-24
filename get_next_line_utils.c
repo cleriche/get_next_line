@@ -12,16 +12,15 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+    while (*s)
+    {
+        if (*s == (char)c)
+            return ((char *)s);
+        s++;
+    }
+    return (NULL);
 }
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
@@ -44,49 +43,60 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (src_len);
 }
 
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	const unsigned char	*s;
+	unsigned char		*d;
+	size_t				i;
+
+	d = (unsigned char *)dest;
+	s = (const unsigned char *)src;
+	if (dest == src)
+		return (dest);
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
+}
+
 char	*ft_strdup(const char *s)
 {
-	size_t	s_len;
-	char	*array;
+    size_t	len = ft_strlen(s);
+    char	*dup = malloc(len + 1);
+    if (!dup)
+        return (NULL);
+    ft_memcpy(dup, s, len);
+    dup[len] = '\0';
+    return (dup);
+}
 
-	if (s == NULL)
-		return (NULL);
-	s_len = ft_strlen(s);
-	array = malloc(s_len + 1);
-	if (!array)
-		return (NULL);
-	ft_strlcpy(array, s, s_len + 1);
-	return (array);
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
+{
+	size_t	dest_len;
+	size_t	src_len;
+	size_t	i;
+
+	src_len = ft_strlen(src);
+	if (size == 0)
+		return (src_len);
+	dest_len = ft_strlen(dest);
+	if (size <= dest_len)
+		return ((size + src_len));
+	i = 0;
+	while (src[i] && (dest_len + i) < size - 1)
+	{
+		dest[dest_len + i] = src[i];
+		i++;
+	}
+	dest[dest_len + i] = '\0';
+	return (dest_len + src_len);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*array;
-	size_t	s1_len;
-	size_t	s2_len;
-
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		s2_len = 0;
-	else
-		s2_len = ft_strlen(s2);
-	s1_len = ft_strlen(s1);
-	array = malloc(s1_len + s2_len + 1);
-	if (!array)
-	{
-		free((char *)s1);
-		return (NULL);
-	}
-	ft_strlcpy(array, s1, s1_len + 1);
-	if (s2)
-		ft_strlcpy(array + s1_len, s2, s2_len + 1);
-	free((char *)s1);
-	return (array);
-}
-/*char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*array;
 	size_t	s1_len;
@@ -100,33 +110,21 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!array)
 		return (NULL);
 	ft_strlcpy(array, s1, s1_len + 1);
-	ft_strlcpy(array + s1_len, s2, s2_len + 1);
+	ft_strlcat(array, s2, s1_len + s2_len + 1);
+	if (!array)
+		return (NULL);
 	return (array);
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
-{
-	char	*result;
-
-	if (!s1)
-		return (ft_strdup(s2));
-	result = ft_strjoin(s1, s2);
-	free(s1);
-	return (result);
-}*/
-
-char	*ft_strchr(const char *s, int c)
+ 
+size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	if (c == 0)
-		return ((char *)&s[ft_strlen(s)]);
+	if (!s)
+		return (0);
 	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
 		i++;
-	}
-	return (NULL);
+	return (i);
 }
