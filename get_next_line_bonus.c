@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cleriche <cleriche@student.42nice.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 11:48:53 by cleriche          #+#    #+#             */
-/*   Updated: 2024/12/19 13:52:41 by cleriche         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*extract_line(char *stash)
 {
@@ -52,10 +40,10 @@ char	*update_stash(char *stash)
 		free(stash);
 		return (NULL);
 	}
-	j = 0;
+	j = -1;
 	while (stash[i])
-		new_stash[j++] = stash[i++];
-	new_stash[j] = '\0';
+		new_stash[++j] = stash[i++];
+	new_stash[++j] = '\0';
 	free(stash);
 	return (new_stash);
 }
@@ -102,21 +90,21 @@ char	*read_file(int fd, char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[1024];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
-	stash = read_file(fd, stash);
-	if (!stash)
+	stash[fd] = read_file(fd, stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	line = extract_line(stash);
+	line = extract_line(stash[fd]);
 	if (!line)
 	{
-		free(stash);
-		stash = NULL;
+		free(stash[fd]);
+		stash[fd] = NULL;
 		return (NULL);
 	}
-	stash = update_stash(stash);
+	stash[fd] = update_stash(stash[fd]);
 	return (line);
 }
