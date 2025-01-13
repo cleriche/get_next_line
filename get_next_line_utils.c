@@ -6,7 +6,7 @@
 /*   By: cleriche <cleriche@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:49:23 by cleriche          #+#    #+#             */
-/*   Updated: 2024/12/19 11:30:54 by cleriche         ###   ########.fr       */
+/*   Updated: 2025/01/13 08:47:30 by cleriche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	}
 	dest[i] = '\0';
 	return (src_len);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*array;
-	size_t	len;
-
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
-	array = malloc(sizeof(char) * (len + 1));
-	if (!array)
-		return (NULL);
-	ft_strlcpy(array, s, len + 1);
-	return (array);
 }
 
 char	*ft_strjoin(char *s1, const char *s2)

@@ -6,11 +6,14 @@
 /*   By: cleriche <cleriche@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:48:53 by cleriche          #+#    #+#             */
-/*   Updated: 2024/12/19 13:52:41 by cleriche         ###   ########.fr       */
+/*   Updated: 2025/01/13 09:05:43 by cleriche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+/*#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>*/
 
 char	*extract_line(char *stash)
 {
@@ -120,3 +123,34 @@ char	*get_next_line(int fd)
 	stash = update_stash(stash);
 	return (line);
 }
+
+/*int main(int argc, char **argv)
+{
+    int fd;
+    char *line;
+    int line_number = 0;
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s <file_name>\n", argv[0]);
+        return (1);
+    }
+
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1)
+    {
+        perror("Error opening file");
+        return (1);
+    }
+
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("Line %d: %s", ++line_number, line);
+        if (line[0] != '\0' && line[ft_strlen(line) - 1] != '\n')
+            printf("\n");
+        free(line);
+    }
+
+    close(fd);
+    return (0);
+}*/

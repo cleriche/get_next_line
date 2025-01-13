@@ -1,4 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cleriche <cleriche@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/13 08:39:18 by cleriche          #+#    #+#             */
+/*   Updated: 2025/01/13 09:14:28 by cleriche         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
+/*#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>*/
 
 char	*extract_line(char *stash)
 {
@@ -108,3 +123,51 @@ char	*get_next_line(int fd)
 	stash[fd] = update_stash(stash[fd]);
 	return (line);
 }
+
+/*int process_file(const char *filename)
+{
+    int fd;
+    char *line;
+    int line_number = 0;
+
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+    {
+        perror("Error opening file");
+        return (1);
+    }
+
+    printf("Reading file: %s\n", filename);
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("Line %d: %s", ++line_number, line);
+        if (line[0] != '\0' && line[ft_strlen(line) - 1] != '\n')
+            printf("\n");
+        free(line);
+    }
+    printf("\n");
+
+    close(fd);
+    return (0);
+}
+
+int main(int argc, char **argv)
+{
+    int i;
+
+    if (argc < 2)
+    {
+        fprintf(stderr, "Usage: %s <file1> [file2] [file3] ...\n", argv[0]);
+        return (1);
+    }
+
+    for (i = 1; i < argc; i++)
+    {
+        if (process_file(argv[i]) != 0)
+        {
+            fprintf(stderr, "Error processing file: %s\n", argv[i]);
+        }
+    }
+
+    return (0);
+}*/
